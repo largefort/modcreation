@@ -59,6 +59,64 @@ class ModdingAPI {
         localStorage.setItem('mods', JSON.stringify(storedMods));
         console.log(`Mod "${modName}" removed.`);
     }
+
+    generateModCode(modName) {
+        const keywords = modName.toLowerCase().split(' ');
+        let code = `
+            {
+                name: "${modName}",
+                version: "1.0",
+                applyMod: function() {
+                    // Your mod code here
+                }
+            }`;
+
+        if (keywords.includes('money')) {
+            code = `
+                {
+                    name: "${modName}",
+                    version: "1.0",
+                    applyMod: function() {
+                        setInterval(() => {
+                            const moneyElement = document.getElementById('money');
+                            let money = parseInt(moneyElement.innerText, 10);
+                            money += 100; // Increase money by 100 every second
+                            moneyElement.innerText = money.toString();
+                        }, 1000);
+                    }
+                }`;
+        } else if (keywords.includes('oil')) {
+            code = `
+                {
+                    name: "${modName}",
+                    version: "1.0",
+                    applyMod: function() {
+                        setInterval(() => {
+                            const oilElement = document.getElementById('oil');
+                            let oil = parseInt(oilElement.innerText, 10);
+                            oil += 10; // Increase oil by 10 every second
+                            oilElement.innerText = oil.toString();
+                        }, 1000);
+                    }
+                }`;
+        } else if (keywords.includes('energy')) {
+            code = `
+                {
+                    name: "${modName}",
+                    version: "1.0",
+                    applyMod: function() {
+                        setInterval(() => {
+                            const energyElement = document.getElementById('energy');
+                            let energy = parseInt(energyElement.innerText, 10);
+                            energy += 5; // Increase energy by 5 every second
+                            energyElement.innerText = energy.toString();
+                        }, 1000);
+                    }
+                }`;
+        }
+
+        return code;
+    }
 }
 
 const ModAPI = new ModdingAPI();
