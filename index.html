@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mod Creation</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Create a Mod</h1>
+    <form id="mod-form">
+        <label for="mod-name">Mod Name</label>
+        <input type="text" id="mod-name" required>
+        
+        <label for="mod-version">Mod Version</label>
+        <input type="text" id="mod-version" required>
+        
+        <label for="mod-code">Mod Code (JavaScript)</label>
+        <textarea id="mod-code" rows="10" required></textarea>
+        
+        <button type="submit">Create Mod</button>
+    </form>
+</div>
+
+<script src="modding-api.js"></script>
+<script>
+    document.getElementById('mod-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const modName = document.getElementById('mod-name').value;
+        const modVersion = document.getElementById('mod-version').value;
+        const modCode = document.getElementById('mod-code').value;
+
+        const newMod = {
+            name: modName,
+            version: modVersion,
+            applyMod: new Function(modCode)
+        };
+
+        ModAPI.loadMod(newMod);
+        alert(`Mod "${modName}" version ${modVersion} created and loaded!`);
+    });
+</script>
+</body>
+</html>
