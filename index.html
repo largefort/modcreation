@@ -58,12 +58,19 @@
         <label for="mod-code">Mod Code (JavaScript)</label>
         <textarea id="mod-code" rows="10" required></textarea>
         
+        <button type="button" onclick="generateModCode()">Generate Mod Code</button>
         <button type="submit">Create Mod</button>
     </form>
 </div>
 
 <script src="modding-api.js"></script>
 <script>
+    function generateModCode() {
+        const modName = document.getElementById('mod-name').value;
+        const modCode = ModAPI.generateModCode(modName);
+        document.getElementById('mod-code').value = modCode;
+    }
+
     document.getElementById('mod-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
